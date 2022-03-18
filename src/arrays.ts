@@ -1,3 +1,9 @@
+import {
+    isExpressionWithTypeArguments,
+    isNumericLiteral,
+    sortAndDeduplicateDiagnostics
+} from "typescript";
+
 /**
  * Consume an array of numbers, and return a new array containing
  * JUST the first and last number. If there are no elements, return
@@ -5,7 +11,15 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    const x = numbers.at(0);
+    const y = numbers.at(numbers.length - 1);
+    let newArray = [x, y];
+
+    if (x === "") {
+        newArray = [];
+    }
+
+    return newArray;
 }
 
 /**
@@ -13,7 +27,8 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const tripled = numbers.map((num: number): number => (num ? num * 3 : 0));
+    return tripled;
 }
 
 /**
@@ -21,7 +36,10 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const toInt = numbers.map((numStr: string): number =>
+        parseInt(numStr) ? parseInt(numStr) : 0
+    );
+    return toInt;
 }
 
 /**
@@ -32,6 +50,9 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
+    const toInt = amounts.map((dollars: string): string =>
+        dollars.at(0) == "$" ? dollars.filter() : 0
+    );
     return [];
 };
 
@@ -58,6 +79,9 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
+    const colornow = colors.map((color: string): string =>
+        color === "red" || color === "green" || color === "blue" ? true : 0
+    );
     return false;
 }
 
