@@ -11,15 +11,13 @@ import {
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
+    let a: number[] = [];
     const x = numbers.at(0);
     const y = numbers.at(numbers.length - 1);
-    let newArray = [x, y];
-
-    if (x === "") {
-        newArray = [];
+    if (x !== undefined && y !== undefined) {
+        a = [x, y];
     }
-
-    return newArray;
+    return a;
 }
 
 /**
@@ -79,10 +77,13 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    const colornow = colors.map((color: string): string =>
-        color === "red" || color === "green" || color === "blue" ? true : 0
+    let x = true;
+    colors.map((color: string): boolean =>
+        color === "red" || color === "green" || color === "blue" || color === ""
+            ? true
+            : (x = false)
     );
-    return false;
+    return x;
 }
 
 /**
@@ -93,7 +94,20 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    let str = "";
+    let sum = 0;
+    addends.map((num: number): string =>
+        num != addends.at(length - 1)
+            ? (str = str + num.toString() + "+")
+            : (str = str + num.toString())
+    );
+
+    if (addends.length === 0) {
+        str = "0";
+    }
+
+    addends.map((num: number): number => (num ? (sum += num) : 0));
+    return sum.toString() + "=" + str;
 }
 
 /**
@@ -106,5 +120,11 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
+    let sum = 0;
+    const x = values.map((value: number): number =>
+        value < 0
+            ? values.splice(values.indexOf(value), 0, sum)
+            : (sum += value)
+    );
     return [];
 }
