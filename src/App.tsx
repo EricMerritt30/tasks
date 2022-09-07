@@ -11,7 +11,7 @@ function App(): JSX.Element {
             >
                 UD CISC275 with React Hooks and TypeScript
             </header>
-            <p>Hello World, this is Eric Merritts Website</p>
+            <p>Hello World, this is Eric Merritt Website</p>
             The Planet of the Apes:
             <div></div>
             <img
