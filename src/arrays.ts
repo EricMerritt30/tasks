@@ -25,7 +25,7 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    const tripled = numbers.map((num: number): number => (num ? num * 3 : 0));
+    const tripled = numbers.map((num: number): number => num * 3);
     return tripled;
 }
 
@@ -48,10 +48,14 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    const toInt = amounts.map((dollars: string): string =>
-        dollars.at(0) == "$" ? dollars.filter() : 0
+    const x = amounts.map((numStr: string): string =>
+        numStr[0] === "$" ? numStr.replace(/\$/g, "") : numStr
     );
-    return [];
+    const noDollars = x.map((numStr: string): number =>
+        parseInt(numStr) ? parseInt(numStr) : 0
+    );
+
+    return noDollars;
 };
 
 /**
@@ -60,7 +64,13 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    const noQuestion = messages.filter(
+        (numStr: string): boolean => numStr.includes("?") === false
+    );
+    const shout = noQuestion.map((numStr: string): string =>
+        numStr.includes("!") ? (numStr = numStr.toUpperCase()) : numStr
+    );
+    return shout;
 };
 
 /**
@@ -68,7 +78,8 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    const shorts = words.filter((str: string): boolean => str.length < 4);
+    return shorts.length;
 }
 
 /**
@@ -120,11 +131,24 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    let sum = 0;
-    const x = values.map((value: number): number =>
+    let trialSum = 0;
+    let finalSum = 0;
+    let x = 0;
+    const subs: number[] = [...values];
+    const indxOfFirstNeg = values.findIndex((num: number): boolean => num < 0);
+    values.map((value: number): number =>
         value < 0
-            ? values.splice(values.indexOf(value), 0, sum)
-            : (sum += value)
+            ? (x = values.indexOf(value) + 1) && (finalSum = trialSum)
+            : (trialSum += value)
     );
-    return [];
+
+    if (x === 0) {
+        subs.splice(values.length, 0, trialSum);
+    } else if (x != indxOfFirstNeg) {
+        subs.splice(indxOfFirstNeg + 1, 0, finalSum);
+    } else {
+        subs.splice(x, 0, finalSum);
+    }
+
+    return subs;
 }
