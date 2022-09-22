@@ -10,7 +10,16 @@ export function makeBlankQuestion(
     name: string,
     type: QuestionType
 ): Question {
-    return {};
+    return {
+        id: id,
+        name: name,
+        type: type,
+        body: "",
+        expected: "",
+        options: [],
+        points: 1,
+        published: false
+    };
 }
 
 /**
@@ -21,7 +30,7 @@ export function makeBlankQuestion(
  * HINT: Look up the `trim` and `toLowerCase` functions.
  */
 export function isCorrect(question: Question, answer: string): boolean {
-    return false;
+    return question.expected.toLowerCase() === answer.trim().toLowerCase();
 }
 
 /**
@@ -31,7 +40,18 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
-    return false;
+    let val = false;
+    if (question.type === "short_answer_question") {
+        val = true;
+    } else if (question.type === "multiple_choice_question") {
+        const x = question.options.filter(
+            (ansOption: string) => ansOption === answer
+        );
+        if (x.length > 0) {
+            val = true;
+        }
+    }
+    return val;
 }
 
 /**
@@ -41,7 +61,7 @@ export function isValid(question: Question, answer: string): boolean {
  * name "My First Question" would become "9: My First Q".
  */
 export function toShortForm(question: Question): string {
-    return "";
+    return question.id + ": " + question.name.slice(0, 10);
 }
 
 /**
