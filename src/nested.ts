@@ -6,7 +6,10 @@ import { Question, QuestionType } from "./interfaces/question";
  * that are `published`.
  */
 export function getPublishedQuestions(questions: Question[]): Question[] {
-    return [];
+    const newArray = questions.filter(
+        (ques: Question): boolean => ques.published === true
+    );
+    return newArray;
 }
 
 /**
@@ -15,7 +18,11 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
  * `expected`, and an empty array for its `options`.
  */
 export function getNonEmptyQuestions(questions: Question[]): Question[] {
-    return [];
+    const nonEmpty = questions.filter(
+        (ques: Question): boolean =>
+            ques.body != "" && ques.options[0] != "" && ques.expected != ""
+    );
+    return nonEmpty;
 }
 
 /***
@@ -34,7 +41,8 @@ export function findQuestion(
  * with the given `id`.
  */
 export function removeQuestion(questions: Question[], id: number): Question[] {
-    return [];
+    const noID = questions.filter((ques: Question): boolean => ques.id != id);
+    return noID;
 }
 
 /***
@@ -42,21 +50,33 @@ export function removeQuestion(questions: Question[], id: number): Question[] {
  * questions, as an array.
  */
 export function getNames(questions: Question[]): string[] {
-    return [];
+    const newArray = questions.map((ques: Question): string => ques.name);
+    return newArray;
 }
 
 /***
  * Consumes an array of questions and returns the sum total of all their points added together.
  */
 export function sumPoints(questions: Question[]): number {
-    return 0;
+    const totalPoints = questions.reduce(
+        (currentSum: number, ques: Question) => currentSum + ques.points,
+        0
+    );
+    return totalPoints;
 }
 
 /***
  * Consumes an array of questions and returns the sum total of the PUBLISHED questions.
  */
 export function sumPublishedPoints(questions: Question[]): number {
-    return 0;
+    const filteredQues = questions.filter(
+        (ques: Question): boolean => ques.published === true
+    );
+    const totalPubPoints = filteredQues.reduce(
+        (currentSum: number, ques: Question) => currentSum + ques.points,
+        0
+    );
+    return totalPubPoints;
 }
 
 /***
@@ -77,7 +97,21 @@ id,name,options,points,published
  * Check the unit tests for more examples!
  */
 export function toCSV(questions: Question[]): string {
-    return "";
+    const s = questions
+        .map(
+            (ques: Question): string =>
+                ques.id +
+                "," +
+                ques.name +
+                "," +
+                ques.options.length +
+                "," +
+                ques.points +
+                "," +
+                ques.published
+        )
+        .join("\n");
+    return s;
 }
 
 /**
@@ -86,7 +120,13 @@ export function toCSV(questions: Question[]): string {
  * making the `text` an empty string, and using false for both `submitted` and `correct`.
  */
 export function makeAnswers(questions: Question[]): Answer[] {
-    return [];
+    const answer = questions.map((ques: Question) => ({
+        questionID: ques.id,
+        text: "",
+        submitted: false,
+        correct: false
+    }));
+    return answer;
 }
 
 /***
@@ -94,7 +134,11 @@ export function makeAnswers(questions: Question[]): Answer[] {
  * each question is now published, regardless of its previous published status.
  */
 export function publishAll(questions: Question[]): Question[] {
-    return [];
+    const allPub = questions.map((ques: Question) => ({
+        ...ques,
+        published: true
+    }));
+    return allPub;
 }
 
 /***
@@ -102,7 +146,20 @@ export function publishAll(questions: Question[]): Question[] {
  * are the same type. They can be any type, as long as they are all the SAME type.
  */
 export function sameType(questions: Question[]): boolean {
-    return false;
+    let ans = false;
+    const onlyMultiple = questions.filter(
+        (ques: Question) => ques.type === "multiple_choice_question"
+    );
+    const onlyShort = questions.filter(
+        (ques: Question) => ques.type === "short_answer_question"
+    );
+    if (
+        onlyMultiple.length === questions.length ||
+        onlyShort.length === questions.length
+    ) {
+        ans = true;
+    }
+    return ans;
 }
 
 /***
