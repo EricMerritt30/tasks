@@ -13,7 +13,7 @@ function App(): JSX.Element {
         <div className="App">
             <header
                 className="App-header"
-                style={{ backgroundColor: "gold", color: "black" }}
+                style={{ backgroundColor: "red", color: "black" }}
             >
                 UD CISC275 with React Hooks and TypeScript
             </header>
