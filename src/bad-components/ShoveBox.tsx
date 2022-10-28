@@ -8,7 +8,7 @@ interface positionProps {
 
 function ShoveBoxButton({ position, setPosition }: positionProps) {
     return (
-        <Button onClick={() => setPosition(2 + position)}>Shove the Box</Button>
+        <Button onClick={() => setPosition(4 + position)}>Shove the Box</Button>
     );
 }
 
