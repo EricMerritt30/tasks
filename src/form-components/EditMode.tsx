@@ -28,7 +28,7 @@ export function EditMode(): JSX.Element {
                     <Form.Check
                         type="switch"
                         id="is-switch-on"
-                        label="Edit Mode?"
+                        label="Change Edit Mode"
                         checked={isEditing}
                         onChange={updateMode}
                     />
@@ -38,7 +38,7 @@ export function EditMode(): JSX.Element {
                         <Form.Check
                             type="switch"
                             id="is-student"
-                            label="Student?"
+                            label="Student Status"
                             checked={isStudent}
                             onChange={changeStudent}
                         />
@@ -47,7 +47,7 @@ export function EditMode(): JSX.Element {
                 <div>
                     {isEditing && (
                         <Form.Group controlId="changeTextBox">
-                            <Form.Label>Change Name:</Form.Label>
+                            <Form.Label>Username:</Form.Label>
                             <Form.Control
                                 type="string"
                                 value={name}
